@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "warden"
+version = "0.1.0"
+description = "Auditoría determinista y de solo lectura de mallas Control-M exportadas en XML"
+requires-python = ">=3.10"
+dependencies = ["networkx>=3.0", "PyYAML>=6.0"]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[project.scripts]
+warden = "warden.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

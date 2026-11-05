@@ -1,0 +1,246 @@
+<title>Guía de Warden</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: columna de lectura única con índice lateral en escritorio; pasos como lista numerada real */
+:root{
+  --bg:#f5f7f9; --surface:#ffffff; --fg:#17212b; --muted:#566373; --line:#dbe1e8;
+  --accent:#0d6e7a; --accent-soft:#e3f1f2; --code-bg:#eef2f5;
+  --alta:#c4321f; --media:#c26a0a; --baja:#9a7a00; --info:#2a62b8;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11171d; --surface:#18212a; --fg:#e4e9ee; --muted:#9aa7b5; --line:#2a3541;
+  --accent:#4fb8c4; --accent-soft:#16343a; --code-bg:#1f2a34;
+  --alta:#ff7a66; --media:#f0a24a; --baja:#d8bd45; --info:#7aa8f0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11171d; --surface:#18212a; --fg:#e4e9ee; --muted:#9aa7b5; --line:#2a3541;
+  --accent:#4fb8c4; --accent-soft:#16343a; --code-bg:#1f2a34;
+  --alta:#ff7a66; --media:#f0a24a; --baja:#d8bd45; --info:#7aa8f0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px}
+nav p{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+nav ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+nav a{color:var(--muted);text-decoration:none;display:block;padding:3px 0 3px 10px;border-left:2px solid var(--line)}
+nav a:hover,nav a:focus-visible{color:var(--accent);border-left-color:var(--accent);outline:none}
+main{min-width:0;max-width:720px}
+header{margin-bottom:40px}
+.eyebrow{font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 44px/1.05 var(--display);margin:6px 0 14px;text-wrap:balance}
+h2{font:700 26px/1.2 var(--display);margin:56px 0 12px;text-wrap:balance;scroll-margin-top:24px}
+h3{font:600 17px/1.3 var(--body);margin:28px 0 6px}
+p,li{max-width:66ch}
+.lead{font-size:18px;color:var(--muted)}
+a{color:var(--accent)}
+code{font:14px var(--mono);background:var(--code-bg);padding:1px 5px;border-radius:4px}
+.cmd{position:relative;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;margin:10px 0 16px}
+.cmd pre{margin:0;padding:12px 84px 12px 14px;overflow-x:auto;font:14px/1.55 var(--mono)}
+.cmd button{position:absolute;top:8px;right:8px;font:500 12px var(--body);background:var(--surface);color:var(--fg);
+  border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+.cmd button:hover,.cmd button:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+.cmd .tag{display:block;font:500 11px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 14px 0}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:16px 0;display:grid;gap:22px}
+ol.steps>li{counter-increment:s;position:relative;padding-left:46px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);font:700 15px/30px var(--display);text-align:center}
+ol.steps>li>strong{display:block;font-size:17px;margin-bottom:2px}
+.note{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px 16px;margin:16px 0}
+.note b{color:var(--accent)}
+.tbl{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sev{font-weight:600;white-space:nowrap}
+.sev::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:currentColor}
+.alta{color:var(--alta)}.media{color:var(--media)}.baja{color:var(--baja)}.info{color:var(--info)}
+.tree{font:14px/1.5 var(--mono);background:var(--code-bg);border-radius:8px;padding:12px 14px;overflow-x:auto;white-space:pre}
+@media (max-width:820px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px}nav{position:static}nav ol{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:34px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<nav aria-label="Índice">
+  <p>Contenido</p>
+  <ol>
+    <li><a href="#que-es">Qué es</a></li>
+    <li><a href="#compartir">Compartir con el equipo</a></li>
+    <li><a href="#instalar">Instalar</a></li>
+    <li><a href="#ejecutar">Ejecutar una auditoría</a></li>
+    <li><a href="#informe">Leer el informe</a></li>
+    <li><a href="#configurar">Configurar reglas</a></li>
+    <li><a href="#rutina">Rutina recomendada</a></li>
+    <li><a href="#problemas">Problemas frecuentes</a></li>
+  </ol>
+</nav>
+
+<main>
+<header>
+  <div class="eyebrow">Equipo DWH · Control-M</div>
+  <h1>Guía de Warden</h1>
+  <p class="lead">Cómo instalar la herramienta, auditar una malla exportada de Control-M e interpretar los hallazgos. La herramienta solo lee el XML: no se conecta a Control-M ni modifica nada.</p>
+</header>
+
+<h2 id="que-es">Qué es</h2>
+<p>Warden recibe el XML de un <em>Complete Workspace</em> exportado desde Control-M y construye el grafo completo de dependencias (INCOND, OUTCOND, ON/DOCOND y DOFORCEJOB). Después simula la planificación día a día y responde preguntas como estas:</p>
+<ul>
+  <li>¿Hay algún job esperando una condición que nadie genera?</li>
+  <li>¿Algún job depende de otro que no se planifica ese día?</li>
+  <li>Si falla JOB_A, ¿cuántos jobs quedan bloqueados detrás?</li>
+  <li>¿Qué dependencias externas (GDW-, 1PJ1-, GBI-) son críticas para el batch?</li>
+</ul>
+<p>Cada problema se agrupa por <strong>causa raíz</strong> con su impacto directo e indirecto, para no tener que revisar cientos de alertas repetidas. Si con la información del XML no se puede demostrar un problema, el hallazgo sale como INFO y no como ALTA.</p>
+
+<h2 id="compartir">Compartir con el equipo</h2>
+<p>Lo haces una sola vez, como responsable de la herramienta. Lo más cómodo es un repositorio Git, porque así todo el equipo recibe las mejoras y los cambios de configuración.</p>
+<ol class="steps">
+  <li><strong>Crea el repositorio</strong>
+    Desde la carpeta <code>Warden</code>, crea un repositorio en el GitLab, GitHub o Azure DevOps del proyecto y sube el código. No subas los XML ni los informes: pueden contener nombres de servidores y direcciones de correo.
+    <div class="cmd"><span class="tag">PowerShell o Git Bash</span><pre>cd C:\Users\ochaabay\Downloads\Warden
+git init
+git add README.md pyproject.toml requirements.txt warden.py config docs src tests input/.gitkeep report/.gitkeep logs/.gitkeep
+git commit -m "Warden: primera versión"
+git remote add origin &lt;URL_DEL_REPOSITORIO&gt;
+git push -u origin main</pre><button type="button">Copiar</button></div>
+  </li>
+  <li><strong>Añade un .gitignore</strong>
+    Así nadie sube por error mallas, informes o logs.
+    <div class="cmd"><span class="tag">.gitignore</span><pre>input/*
+!input/.gitkeep
+report/*
+!report/.gitkeep
+logs/*
+!logs/.gitkeep
+__pycache__/
+.pytest_cache/</pre><button type="button">Copiar</button></div>
+  </li>
+  <li><strong>Da acceso al equipo</strong>
+    Pasa a tus compañeros la URL del repositorio y el enlace a esta guía. Si no tenéis repositorio, una alternativa es comprimir la carpeta en un zip y dejarlo en la unidad compartida del proyecto, aunque así cada uno tendrá que actualizar su copia a mano.
+  </li>
+</ol>
+
+<h2 id="instalar">Instalar</h2>
+<p>Cada persona del equipo lo hace una vez en su equipo. Solo necesita <strong>Python 3.10 o superior</strong> (en PowerShell, <code>python --version</code> debe mostrar 3.10 o más).</p>
+<ol class="steps">
+  <li><strong>Descarga el código</strong>
+    <div class="cmd"><pre>git clone &lt;URL_DEL_REPOSITORIO&gt; Warden
+cd Warden</pre><button type="button">Copiar</button></div>
+  </li>
+  <li><strong>Crea un entorno virtual</strong> (recomendado, para no mezclar librerías con otros proyectos)
+    <div class="cmd"><span class="tag">PowerShell</span><pre>python -m venv .venv
+.venv\Scripts\Activate.ps1</pre><button type="button">Copiar</button></div>
+    Si PowerShell bloquea el script de activación, ejecuta antes <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>.
+  </li>
+  <li><strong>Instala las dependencias</strong>
+    <div class="cmd"><pre>pip install -r requirements.txt</pre><button type="button">Copiar</button></div>
+    Son tres librerías: networkx, PyYAML y pytest. Si quieres además el comando <code>Warden</code>, ejecuta también <code>pip install -e .</code>
+  </li>
+  <li><strong>Comprueba que funciona</strong>
+    <div class="cmd"><pre>python -m pytest -q</pre><button type="button">Copiar</button></div>
+    Debe terminar con <code>51 passed</code>.
+  </li>
+</ol>
+
+<h2 id="ejecutar">Ejecutar una auditoría</h2>
+<ol class="steps">
+  <li><strong>Exporta la malla desde Control-M</strong>
+    En Control-M, abre el Workspace con los folders que quieras auditar y expórtalo como XML. Se recomienda un <em>Complete Workspace</em> con todos los folders relacionados: si falta un folder, sus condiciones aparecerán como «sin productor».
+  </li>
+  <li><strong>Copia el XML a <code>input/</code></strong>
+    Si el nombre tiene espacios, ponlo entre comillas al ejecutar.
+  </li>
+  <li><strong>Lanza la auditoría</strong>
+    <div class="cmd"><pre>python warden.py "input/Complete Workspace.xml" --start-date 2026-11-01 --days 365</pre><button type="button">Copiar</button></div>
+    Una malla de unos 1.300 jobs tarda un par de segundos. Al terminar, la consola muestra un resumen y las rutas de los ficheros generados.
+  </li>
+</ol>
+
+<h3>Opciones</h3>
+<div class="tbl"><table>
+  <thead><tr><th>Opción</th><th>Para qué sirve</th></tr></thead>
+  <tbody>
+    <tr><td><code>--start-date AAAA-MM-DD</code></td><td>Primer día que se simula. Por defecto, hoy.</td></tr>
+    <tr><td><code>--days N</code></td><td>Días simulados. Por defecto 365, para cubrir calendarios mensuales y trimestrales.</td></tr>
+    <tr><td><code>--rules CTM001,CTM004</code></td><td>Ejecuta solo algunas reglas.</td></tr>
+    <tr><td><code>--config ruta.yaml</code></td><td>Usa otra configuración de reglas.</td></tr>
+    <tr><td><code>--log-level DEBUG</code></td><td>Muestra más detalle en consola. El fichero de <code>logs/</code> siempre guarda el detalle completo.</td></tr>
+    <tr><td><code>--output-dir carpeta</code></td><td>Guarda los informes en otra carpeta.</td></tr>
+    <tr><td>Varios XML</td><td><code>python warden.py a.xml b.xml</code> los analiza como una sola malla.</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Ficheros que genera</h3>
+<div class="tree">report/controlm_audit_AAAAMMDD_HHMMSS.html   informe para revisar (se abre con doble clic)
+report/controlm_audit_AAAAMMDD_HHMMSS.json   mismos datos, para automatizar
+logs/controlm_audit_AAAAMMDD_HHMMSS.log      traza de la ejecución</div>
+
+<h2 id="informe">Leer el informe</h2>
+<p>El HTML funciona sin conexión y se puede enviar por correo. Arriba muestra el resumen (jobs, folders, dependencias y número de hallazgos por severidad). Debajo están los filtros por severidad, regla, folder, application y sub-application, y un buscador de jobs y condiciones. Al abrir un hallazgo se ven la condición, el productor, el consumidor, la planificación, las fechas afectadas, la causa raíz, el impacto, la recomendación y, si aplica, el subgrafo de jobs afectados.</p>
+<div class="tbl"><table>
+  <thead><tr><th>Severidad</th><th>Significado</th><th>Qué hacer</th></tr></thead>
+  <tbody>
+    <tr><td><span class="sev alta">ALTA</span></td><td>Está demostrado que un job no puede ejecutarse.</td><td>Revisar y corregir. Empezar por el filtro «Solo causas raíz».</td></tr>
+    <tr><td><span class="sev media">MEDIA</span></td><td>Riesgo real, pero depende de algo que el XML no muestra (ejecución manual, AND/OR ambiguo, horarios).</td><td>Revisar con el responsable de la cadena.</td></tr>
+    <tr><td><span class="sev baja">BAJA</span></td><td>Configuración mejorable que no bloquea la ejecución.</td><td>Planificar la limpieza.</td></tr>
+    <tr><td><span class="sev info">INFO</span></td><td>Contexto: dependencias externas, jobs sin planificar, puntos con muchas dependencias, casos no verificables.</td><td>Consultar cuando haga falta.</td></tr>
+  </tbody>
+</table></div>
+<p>La lista completa de reglas (CTM001 a CTM020) está en el <code>README.md</code> del repositorio.</p>
+
+<h2 id="configurar">Configurar reglas</h2>
+<p>Todo se ajusta en <code>config/controlm_rules.yaml</code>, sin tocar código. Como el fichero está en el repositorio, un cambio confirmado se aplica a todo el equipo.</p>
+<div class="cmd"><span class="tag">config/controlm_rules.yaml</span><pre>external_condition_prefixes:      # condiciones de otros Control-M / sistemas
+  - "GDW-"
+  - "1PJ1-"
+  - "GBI-"
+external_conditions:              # externas con nombre exacto
+  - "METADATOSCONTROLMJAZZTEL999-TO-EXA_CALCULA_CAMINO_CRITICO"
+excluded_jobs: []                 # jobs que no se quieren auditar
+excluded_folders: []
+simulation:
+  new_day_time: "0700"            # hora del New Day (mejora CTM007)
+  user_daily_times: {DWH_18: "1800"}</pre><button type="button">Copiar</button></div>
+<div class="note"><b>Dependencia externa y exclusión no son lo mismo.</b> Una condición declarada externa deja de ser un error, pero se sigue analizando y se calcula su impacto. Una exclusión la retira de las reglas. Para condiciones que llegan de otro sistema, usa casi siempre <code>external_conditions</code>.</div>
+
+<h2 id="rutina">Rutina recomendada</h2>
+<ol class="steps">
+  <li><strong>Antes de subir cambios a la malla</strong>
+    Exporta el workspace con tus cambios, ejecuta la auditoría y comprueba que no aparecen ALTA nuevas respecto al informe anterior.
+  </li>
+  <li><strong>Revisión periódica</strong>
+    Una vez por semana o tras cada despliegue, una persona del equipo audita el Complete Workspace y deja el HTML en la carpeta compartida.
+  </li>
+  <li><strong>Cuando un ALTA resulta ser correcto</strong>
+    Si la condición la genera otro sistema, añádela a <code>external_conditions</code> y sube el cambio al repositorio, para que deje de aparecer a todo el equipo.
+  </li>
+</ol>
+
+<h2 id="problemas">Problemas frecuentes</h2>
+<h3>La consola muestra caracteres raros (Ã³, �)</h3>
+<p>La consola de Windows no está en UTF-8. Los informes HTML y JSON salen bien de todas formas. Para corregir la consola, ejecuta antes <code>$env:PYTHONIOENCODING="utf-8"</code> en PowerShell.</p>
+<h3>«No module named networkx» o «No module named yaml»</h3>
+<p>No está activado el entorno virtual o no se instalaron las dependencias. Repite los pasos 2 y 3 de la instalación.</p>
+<h3>Muchas condiciones «sin productor»</h3>
+<p>Probablemente el XML no incluye todos los folders. Exporta el Complete Workspace o pasa varios XML a la vez.</p>
+<h3>Un hallazgo dice «No verificable con la información disponible»</h3>
+<p>El XML no permite decidir ese caso (calendarios externos, expresiones como <code>D6W1</code>). La herramienta prefiere marcarlo como INFO antes que dar un falso error, así que hay que revisarlo a mano.</p>
+</main>
+</div>
+
+<script>
+document.querySelectorAll(".cmd button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const pre = btn.parentElement.querySelector("pre");
+    const done = () => { btn.textContent = "Copiado"; setTimeout(() => btn.textContent = "Copiar", 1500); };
+    navigator.clipboard.writeText(pre.textContent).then(done).catch(() => {
+      const r = document.createRange(); r.selectNodeContents(pre);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Pulsa Ctrl+C";
+    });
+  });
+});
+</script>

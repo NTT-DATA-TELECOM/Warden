@@ -1,0 +1,27 @@
+2026-11-03 12:21:15,975 INFO    controlm_tool.config.loader: Configuración cargada desde C:\Users\ochaabay\Downloads\controlM-tool\config\controlm_rules.yaml
+2026-11-03 12:21:15,977 INFO    controlm_tool.parser.xml_parser: Leyendo input\03-11-2026 12-19 Complete Workspace.xml
+2026-11-03 12:21:16,149 INFO    controlm_tool.parser.xml_parser: Parseo completo: 9 folders, 1323 jobs
+2026-11-03 12:21:16,197 INFO    controlm_tool.graph.dependency_graph: Grafo: 1353 nodos, 4702 arcos, 4905 dependencias
+2026-11-03 12:21:16,242 DEBUG   controlm_tool.scheduler.simulator: DOFORCEJOB DWHRAC_TARIF_DDSP_DC2/EXA_DWH_137_TAR desde DWHRAC_DIARIOS_MANANA/EXA_DWH_#TariDDSPS#33 sin destino en la malla
+2026-11-03 12:21:16,243 DEBUG   controlm_tool.scheduler.simulator: DOFORCEJOB DWHRAC_TARIF_DDSP_DC2/EXA_DWH_610_TAR desde DWHRAC_DIARIOS_MANANA/EXA_DWH_#TariDDSPS#33 sin destino en la malla
+2026-11-03 12:21:16,269 INFO    controlm_tool.scheduler.simulator: Simulación 2026-11-03..2027-11-02 (365 días) calculada para 1323 jobs
+2026-11-03 12:21:16,351 INFO    controlm_tool.rules.engine: CTM001 INCOND sin productor                        6 hallazgos (0.08s)
+2026-11-03 12:21:16,726 INFO    controlm_tool.rules.engine: CTM002 Productor no planificado                    2 hallazgos (0.37s)
+2026-11-03 12:21:16,726 INFO    controlm_tool.rules.engine: CTM003 Incompatibilidad ODATE                      1 hallazgos (0.00s)
+2026-11-03 12:21:16,736 INFO    controlm_tool.rules.engine: CTM004 Ciclo de dependencias                       1 hallazgos (0.01s)
+2026-11-03 12:21:16,736 INFO    controlm_tool.rules.engine: CTM005 Job imposible de ejecutar                   1 hallazgos (0.00s)
+2026-11-03 12:21:16,737 INFO    controlm_tool.rules.engine: CTM007 Ventana temporal incompatible               0 hallazgos (0.00s)
+2026-11-03 12:21:16,782 INFO    controlm_tool.rules.engine: CTM008 OUTCOND sin consumidor                    283 hallazgos (0.05s)
+2026-11-03 12:21:16,792 INFO    controlm_tool.rules.engine: CTM009 Dependencia externa                        25 hallazgos (0.01s)
+2026-11-03 12:21:16,823 INFO    controlm_tool.rules.engine: CTM010 Condición generada en resultado no OK     187 hallazgos (0.03s)
+2026-11-03 12:21:16,831 INFO    controlm_tool.rules.engine: CTM011 Job con elevado fan-in                     56 hallazgos (0.01s)
+2026-11-03 12:21:16,871 INFO    controlm_tool.rules.engine: CTM012 Nomenclatura sospechosa                    36 hallazgos (0.04s)
+2026-11-03 12:21:16,888 INFO    controlm_tool.rules.engine: CTM013 Borrado de condición sospechoso            34 hallazgos (0.02s)
+2026-11-03 12:21:16,891 INFO    controlm_tool.rules.engine: CTM014 Código ON no reconocido                     4 hallazgos (0.00s)
+2026-11-03 12:21:16,892 INFO    controlm_tool.rules.engine: CTM015 JOBNAME duplicado                           3 hallazgos (0.00s)
+2026-11-03 12:21:17,061 INFO    controlm_tool.rules.engine: CTM016 Planificación especial                     50 hallazgos (0.17s)
+2026-11-03 12:21:17,194 INFO    controlm_tool.rules.engine: CTM017 Planificación no verificable                1 hallazgos (0.13s)
+2026-11-03 12:21:17,196 INFO    controlm_tool.rules.engine: CTM018 Auto-dependencia                            9 hallazgos (0.00s)
+2026-11-03 12:21:17,196 INFO    controlm_tool.rules.engine: CTM020 Incompatibilidad temporal                   0 hallazgos (0.00s)
+2026-11-03 12:21:17,196 INFO    controlm_tool.rules.impact: Calculando impacto de 34 causas raíz
+2026-11-03 12:21:17,293 INFO    controlm_tool: Auditoría completada en 1.3s

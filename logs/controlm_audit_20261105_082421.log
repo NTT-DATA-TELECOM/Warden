@@ -1,0 +1,27 @@
+2026-11-05 08:24:21,472 INFO    warden.config.loader: Configuración cargada desde C:\Users\ochaabay\Downloads\controlM-tool\config\controlm_rules.yaml
+2026-11-05 08:24:21,472 INFO    warden.parser.xml_parser: Leyendo input\complete_workspace.xml
+2026-11-05 08:24:21,588 INFO    warden.parser.xml_parser: Parseo completo: 9 folders, 1323 jobs
+2026-11-05 08:24:21,619 INFO    warden.graph.dependency_graph: Grafo: 1355 nodos, 4702 arcos, 4903 dependencias
+2026-11-05 08:24:21,656 DEBUG   warden.scheduler.simulator: DOFORCEJOB DWHRAC_TARIF_DDSP_DC2/EXA_DWH_137_TAR desde DWHRAC_DIARIOS_MANANA/EXA_DWH_#TariDDSPS#33 sin destino en la malla
+2026-11-05 08:24:21,657 DEBUG   warden.scheduler.simulator: DOFORCEJOB DWHRAC_TARIF_DDSP_DC2/EXA_DWH_610_TAR desde DWHRAC_DIARIOS_MANANA/EXA_DWH_#TariDDSPS#33 sin destino en la malla
+2026-11-05 08:24:21,680 INFO    warden.scheduler.simulator: Simulación 2026-10-01..2027-09-30 (365 días) calculada para 1323 jobs
+2026-11-05 08:24:21,808 INFO    warden.rules.engine: CTM001 INCOND sin productor                        8 hallazgos (0.13s)
+2026-11-05 08:24:22,205 INFO    warden.rules.engine: CTM002 Productor no planificado                    2 hallazgos (0.40s)
+2026-11-05 08:24:22,205 INFO    warden.rules.engine: CTM003 Incompatibilidad ODATE                      1 hallazgos (0.00s)
+2026-11-05 08:24:22,214 INFO    warden.rules.engine: CTM004 Ciclo de dependencias                       1 hallazgos (0.01s)
+2026-11-05 08:24:22,214 INFO    warden.rules.engine: CTM005 Job imposible de ejecutar                   1 hallazgos (0.00s)
+2026-11-05 08:24:22,214 INFO    warden.rules.engine: CTM007 Ventana temporal incompatible               0 hallazgos (0.00s)
+2026-11-05 08:24:22,251 INFO    warden.rules.engine: CTM008 OUTCOND sin consumidor                    283 hallazgos (0.04s)
+2026-11-05 08:24:22,260 INFO    warden.rules.engine: CTM009 Dependencia externa                        25 hallazgos (0.01s)
+2026-11-05 08:24:22,287 INFO    warden.rules.engine: CTM010 Condición generada en resultado no OK     187 hallazgos (0.03s)
+2026-11-05 08:24:22,294 INFO    warden.rules.engine: CTM011 Job con elevado fan-in                     56 hallazgos (0.01s)
+2026-11-05 08:24:22,326 INFO    warden.rules.engine: CTM012 Nomenclatura sospechosa                    36 hallazgos (0.03s)
+2026-11-05 08:24:22,336 INFO    warden.rules.engine: CTM013 Borrado de condición sospechoso            34 hallazgos (0.01s)
+2026-11-05 08:24:22,338 INFO    warden.rules.engine: CTM014 Código ON no reconocido                     4 hallazgos (0.00s)
+2026-11-05 08:24:22,339 INFO    warden.rules.engine: CTM015 JOBNAME duplicado                           3 hallazgos (0.00s)
+2026-11-05 08:24:22,498 INFO    warden.rules.engine: CTM016 Planificación especial                     50 hallazgos (0.16s)
+2026-11-05 08:24:22,644 INFO    warden.rules.engine: CTM017 Planificación no verificable                1 hallazgos (0.15s)
+2026-11-05 08:24:22,646 INFO    warden.rules.engine: CTM018 Auto-dependencia                            9 hallazgos (0.00s)
+2026-11-05 08:24:22,647 INFO    warden.rules.engine: CTM020 Incompatibilidad temporal                   0 hallazgos (0.00s)
+2026-11-05 08:24:22,647 INFO    warden.rules.impact: Calculando impacto de 36 causas raíz
+2026-11-05 08:24:22,656 INFO    warden: Auditoría completada en 1.2s

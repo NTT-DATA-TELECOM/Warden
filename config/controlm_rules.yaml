@@ -1,0 +1,76 @@
+# Configuración de Warden.
+# Todo lo que aquí aparece puede modificarse sin tocar código Python.
+
+# ---------------------------------------------------------------------------
+# DEPENDENCIAS EXTERNAS
+# Condiciones generadas por otros Control-M / sistemas. NO son error, pero se
+# analizan y se calcula su impacto aguas abajo (CTM009).
+# ---------------------------------------------------------------------------
+external_condition_prefixes:
+  - "GDW-"
+  - "1PJ1-"
+  - "GBI-"
+
+# Nombres exactos de condiciones externas (sin prefijo reconocible).
+external_conditions: []
+#  - "METADATOSCONTROLMJAZZTEL999-TO-EXA_CALCULA_CAMINO_CRITICO"
+
+# Expresiones regulares adicionales de condiciones externas.
+external_condition_patterns: []
+
+# ---------------------------------------------------------------------------
+# EXCLUSIONES
+# A diferencia de una dependencia externa, una exclusión omite el elemento de
+# las reglas indicadas en `exclusion_scope` (o de todas si está vacío).
+# ---------------------------------------------------------------------------
+excluded_jobs: []          # JOBNAME o FOLDER/JOBNAME
+excluded_conditions: []
+excluded_folders: []
+exclusion_scope: []        # p.ej. ["CTM001", "CTM008"]. Vacío = todas las reglas.
+
+# ---------------------------------------------------------------------------
+# SIMULADOR
+# ---------------------------------------------------------------------------
+simulation:
+  default_days: 365
+  # Primer día de la semana para WEEKDAYS tipo DnWm (0=domingo .. 6=sábado).
+  # null => esas expresiones se tratan como UNKNOWN.
+  week_start: null
+  # Horas (HHMM) a las que se ordena cada FOLDER_ORDER_METHOD. Son opcionales:
+  # sin ellas no puede demostrarse imposibilidad por ventana horaria.
+  new_day_time: null           # p.ej. "0700"
+  user_daily_times: {}         # p.ej. {DWH_18: "1800"}
+
+# ---------------------------------------------------------------------------
+# UMBRALES Y SEVERIDADES
+# ---------------------------------------------------------------------------
+thresholds:
+  fan_in_info: 15
+  fan_in_media: 30
+  # Máximo de fechas concretas mostradas por hallazgo.
+  max_dates_listed: 15
+  # Impacto mínimo (jobs) para marcar una dependencia externa como CRÍTICA.
+  critical_external_impact: 10
+
+severity_overrides: {}
+#  CTM008: INFO
+
+disabled_rules: []
+
+# ---------------------------------------------------------------------------
+# NOMENCLATURA (CTM012)
+# Las condiciones suelen nombrarse PREFIJO-PRODUCTOR-TO-CONSUMIDOR.
+# Se eliminan estos prefijos de job antes de comparar (JOB_DWH_x == EXA_DWH_x).
+# ---------------------------------------------------------------------------
+naming:
+  separator: "-TO-"
+  condition_prefix_pattern: "^[A-Z0-9]+-"
+  equivalent_job_prefixes: ["JOB_", "EXA_", "EXAD-"]
+
+# Condiciones que por su nombre se activan manualmente (CTM001 baja a MEDIA).
+manual_condition_patterns:
+  - "MANUAL"
+  - "CARGA_INICIAL"
+
+# Códigos ON que Control-M reconoce como estado del job.
+valid_on_codes: ["OK", "NOTOK", "*"]
